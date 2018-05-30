@@ -1,0 +1,26 @@
+body{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items:center;
+
+}
+
+#canvas{
+	border:1px solid black;
+}
+
+h1{
+	font-size:50px;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+button{
+	display: none;
+	font-family: Helvetica;
+	background-color: white;
+	border:red 4px solid;
+	font-size:25px;
+	margin-top:15px;
+}
