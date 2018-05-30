@@ -214,7 +214,7 @@ $(document).ready(function(){
       // Move the aliens
       let rightMost = 0;
       let leftMost = screen.width;
-      for(let i = 0;  < alien.length; i++){
+      for(let i = 0; i < alien.length; i++){
         let alien  = alien[i];
         alien.x += 30 * alien_direction;
 
