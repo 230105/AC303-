@@ -199,7 +199,7 @@ $(document).ready(function(){
     // Aliens randomly shoot bullets by chance
     if(Math.random() < 0.03 && aliens.length > 0){
       let alien = alien[Math.floor(Math.random() * (aliens.length))];
-      bullet.push(new Bullet(alien.x + alien.width * 0.5, alien.y + alien.height, 4, 2, 4 "#FFFFFF"));
+      bullet.push(new Bullet(alien.x + alien.width * 0.5, alien.y + alien.height, 4, 2, 4, "#FFFFFF"));
     }
 
     // Update the frame
