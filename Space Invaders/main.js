@@ -203,7 +203,7 @@ $(document).ready(function(){
     }
 
     // Update the frame
-    frame++;   
+    frames++;   
 
     // Check if the frames number reach the level's frame requirement for movement
 
