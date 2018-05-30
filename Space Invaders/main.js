@@ -207,7 +207,7 @@ $(document).ready(function(){
 
     // Check if the frames number reach the level's frame requirement for movement
 
-    if(frames % levelframe == 0){
+    if(frames % levelFrame == 0){
       // Switch "motion" variable between 0 & 1.
       motion = (motion + 1) % 2
 
