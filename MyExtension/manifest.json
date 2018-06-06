@@ -1,0 +1,20 @@
+{
+	"manifest_version": 2, 
+
+	"name": "Browser Awesomeness Booster Plugin",
+	"description": "",
+	"version": "1.0",
+
+	"browser_action": {
+		"default_icon": "MyIcon.jpg",
+		"default_popup": "popup.html"
+	},
+
+	"permissions": [
+		"activeTab",
+		"tabs"
+	]
+}
+
+
+

@@ -12,9 +12,9 @@ $(document).ready(function(){
 		x: 7,
 		y: 7,
 		//direction: right - 0 left - 1, up - 2, down - 3, stopped - 5
-		direction:x 5,
+		direction: x,
 		alive: true;
-		tail: 1
+		tail: 1;
 	};
 
 	var candy = {

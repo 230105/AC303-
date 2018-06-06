@@ -77,7 +77,7 @@ $(document).ready(function(){
       // Parameters for Sprite => (image's src, top left corner x, y, width, height)
       alienSprite = [
         [new Sprite(this, 0, 0, 22, 16), new Sprite(this, 0, 16, 22, 16)],
-        [new Sprite(this, 22, 0, 16, 16), new Sprite(this, 22, 16, 26, 16)],
+        [new Sprite(this, 22, 0, 16, 16), new Sprite(this, 22, 16, 16, 16)],
         [new Sprite(this, 38, 0, 24, 16), new Sprite(this, 38, 16, 24, 16)]
       ] 
       tankSprite = new Sprite(this, 62, 0, 22, 16);
@@ -131,11 +131,11 @@ $(document).ready(function(){
   function update(){
 
     // Moving the tank
-    if(keyPressed.indexOf(37) != 1){
+    if(keyPressed.indexOf(37) != -1){
       tank.x -= 4;
     }
 
-    if(keyPressed.indexOf(37) != 1){
+    if(keyPressed.indexOf(39) != -1){
       tank.x += 4;
     }
 
@@ -144,13 +144,13 @@ $(document).ready(function(){
     tank.x = Math.min(screen.width - tankSprite.width - 30, tank.x)
 
     // Loop through bullets array to move each bullet
-    for(let i = 0; i < bullets; i++){
+    for(let i = 0; i < bullets.length; i++){
       let bullet = bullets[i];
       bullet.update();
 
       // Check if the bullet goes out of screen (either from top or bottom)
       if(bullet.y + bullet.height < 0 || bullet.y > screen.height){
-        bullet.splice(i,1); //remove bullets from array
+        bullets.splice(i,1); //remove bullets from array
         i--;
         continue;
       }
@@ -158,11 +158,11 @@ $(document).ready(function(){
       // Check if the bullet hits the cities (bullets from aliens & player)
       let h2 = bullet.height / 2;
       if(cities.y < bullet.y + bullet.height &&
-        bullet.y + bullet < cities.y + cities.height){
+        bullet.y + bullet.height < cities.y + cities.height){
 
 
         if(cities.gotHit(bullet.x, bullet.y + bullet.height)){
-          bullet.splice(i,1);
+          bullets.splice(i,1);
           i--
           continue; 
         }
@@ -173,10 +173,10 @@ $(document).ready(function(){
       // Check if the bullet hits the aliens (bullets from player)
       for(let j = 0; j < aliens.length; j++ ){
         let alien = aliens[j];
-        if(Colliding(aliens, bullet)  && bullet.speed_y < 0){
+        if(Colliding(alien, bullet)  && bullet.speed_y < 0){
           aliens.splice(j, 1); 
           j--;
-          aliens.splice(j,1);
+          bullets.splice(i,1);
           i--;
 
           switch(aliens.length){
@@ -199,7 +199,7 @@ $(document).ready(function(){
     // Aliens randomly shoot bullets by chance
     if(Math.random() < 0.03 && aliens.length > 0){
       let alien = aliens[Math.floor(Math.random() * (aliens.length))];
-      bullet.push(new Bullet(alien.x + alien.width * 0.5, alien.y + alien.height, 4, 2, 4, "#FFFFFF"));
+      bullets.push(new Bullet(alien.x + alien.width * 0.5, alien.y + alien.height, 4, 2, 4, "#FFFFFF"));
     }
 
     // Update the frame
@@ -226,15 +226,15 @@ $(document).ready(function(){
       let bottomMost = 0;
       if(rightMost > screen.width - 30 || leftMost < 30 ){
         alien_direction *= -1;
-        for(let j = 0; j < alien.length; j++){
-          let alien = alien[j];
+        for(let j = 0; j < aliens.length; j++){
+          let alien = aliens[j];
           alien.x += 30 * alien_direction
           alien.y += 30;
 
           bottomMost = Math.max(bottomMost, alien.y + alien.height)
 
           //if the aliens reach the cities, game over!
-          if(bottomMost > TANK.Y - 60){
+          if(bottomMost > tank.y - 60){
             gameOver = true;
           }
         }
@@ -265,7 +265,7 @@ $(document).ready(function(){
     // Draw bullets
     screen.ctx.save();
     for(let i = 0; i < bullets.length; i++){
-      screen.drawBullet(bullet)
+      screen.drawBullet(bullets[i])
     }
     screen.ctx.restore();
 
@@ -293,7 +293,7 @@ $(document).ready(function(){
 
       //if space key is pressed, add bullet
       if(key == 32){
-        bullets,push(new Bullet(tank.x + 10, tank.y, -8, 2, 6, "#FFFFFF"))
+        bullets.push(new Bullet(tank.x + 10, tank.y, -8, 2, 6, "#FFFFFF"))
       }
     }
   })  
@@ -301,14 +301,14 @@ $(document).ready(function(){
   // Removing key from the keyPressed array when a key is released
   $(window).on("keyup", function(event){
     let key = event.which;
-    let index = keyPressed. indexOf(key);
+    let index = keyPressed.indexOf(key);
     if(index != -1){
       keyPressed.splice(index, 1);
     }
   })
 
   // When retry button is click, restart the game.
-  $("retry").on("click", function(){
+  $("#retry").on("click", function(){
     init();
     $(this).hide();
   });
